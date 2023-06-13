@@ -25,5 +25,14 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
     Route::get('/users', 'getAllUsersSystem');
+    Route::get('/user/{id}', 'getOneUser');
     Route::get('/logout', 'logout');
+})->middleware('auth:api');
+
+Route::controller(\App\Http\Controllers\TenisController::class)->group(function () {
+
+    Route::get('/home', 'index');
+    Route::post('/tenis', 'store');
+    Route::get('/show-tenis', 'showOneTenis');
+
 })->middleware('auth:api');

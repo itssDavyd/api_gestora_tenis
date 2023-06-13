@@ -83,6 +83,36 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function getOneUser(Request $request)
+    {
+        if (Auth::guard('api')->check()) {
+            $user = User::find($request->id);
+
+            if (!empty($user)) {
+                return response()->json([
+                    'success' => true,
+                    'status' => 200,
+                    'data' => [
+                        'message' => 'Usuario encontrado correctamente.',
+                        'user' => $user
+                    ]
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'status' => 301,
+                    'data' => [
+                        'message' => 'Usuario no encontrado'
+                    ]
+                ], 301);
+            }
+        }
+        return \response()->json([
+            'status' => 401,
+            'user' => 'Not unauthenticated'
+        ]);
+    }
+
     public function logout()
     {
         if (Auth::guard('api')->check()) {
